@@ -8,6 +8,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        'courier-prime': ['Courier Prime', 'monospace']
+      },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",

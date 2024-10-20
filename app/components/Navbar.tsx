@@ -4,18 +4,20 @@ import React, { useState } from 'react'
 
 import Link from "next/link"
 
+import { SignOutButton } from '@clerk/nextjs'
+
+
 export default function Navbar() {
     const [ sidebarVisible, setSidebarVisible ] = useState(false);
 
-    const toggleNavbar = () => {
+    const toggleNavbar = ({isOpen, setIsOpen }: NavbarProps) => {
         setSidebarVisible(!sidebarVisible);
     };
 
+
     return(
-        <div className="fixed
-        top-0 left-0 h-full w-full z-50">
-            <button
-                className="absolute top-0 left-0 p-4 text-white bg-gray-900"
+        <div className="flex justify-start fixed navbar ${isOpen ? 'open' : 'closed'} top-0 left-0 z-50 ">
+            <button className="absolute top-0 left-0 p-4 text-white bg-gray-900"
                 onClick={toggleNavbar}
                 >
                     {/*Menu Icon*/}
@@ -25,24 +27,24 @@ export default function Navbar() {
                             sidebarVisible ? 'translate-x-0' : '-translate-x-full'
                       }`}
                     >
-                         <div className="flex flex-col p-4 text-white">
+                         <div className="flex flex-col items-center justify between h-full p-4 text-white">
           <h2 className="text-xl font-bold">User Information</h2>
           {/* <p>{user.name}</p>
           <p>{user.email}</p> */}
+          <h2 className="mt-2">Nav bar </h2>
+          <SignOutButton>
           <button
             className="mt-4 p-2 bg-red-500 text-white rounded-md"
-            onClick={() => {}}
           >
             Logout
           </button>
+          </SignOutButton>
         </div>
 
-                    </div>
+        </div>
         </div>
 
 
-        /*<div className={(sidebarVisible ? 'visible ' : 'hidden ') + "z-40 translate-x-full absolute w-15 h-full grid-col shadow-2xl pr-5 py-5 justify-between items center backdrop-blur-sm bg-transparent/20 text-white"}>
-            <p onClick={() => {setSidebarVisible(!sidebarVisible)}} className="rounded-xl bg-neutral-900 hover:bg-neutral-400 active:bg-neutral-500 transition-all duration-200 px-3 py-2">test nav</p>
-        </div>*/
+
     )
 }

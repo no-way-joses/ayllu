@@ -11,14 +11,16 @@ import Navbar from "../components/Navbar";
 import { useEffect, useRef, useState } from "react";
 import MoodFeed from "./_components/MoodFeed";
 import MoodModal from "./_components/MoodModal";
-import Events from "./_components/Events";
+import EventModal from "./_components/EventModal";
 
 export default function Home() {
   let [ hasFamily, setFamily ] = useState(false);
+  let [ familyId, setFamilyId ] = useState('');
+  let [ eventModal, setEventModal ] = useState(false);
   let [ modalOpen, setModalOpen ] = useState(false); // TODO: change back to true
 
   const router = useRouter();
-  const { user } = useUser();
+  const { user, isLoaded } = useUser();
   const codeRef = useRef(null);
 
   const onCreate = () => {
@@ -26,6 +28,8 @@ export default function Home() {
   }
 
   useEffect(() => {
+    if (!isLoaded) return;
+
     axios.post(`${process.env.NEXT_PUBLIC_API}/user`, {
       userId: user?.id,
       name: user?.firstName
@@ -39,34 +43,41 @@ export default function Home() {
 
     console.log('user id', user?.id)
 
-    axios.post(`${process.env.NEXT_PUBLIC_API}/user`, {
+    axios.post(`${process.env.NEXT_PUBLIC_API}/user/get`, {
       userId: user?.id
     })
     .then(res => {
-      console.log('SUCCESS get user', res)
+      console.log('SUCCESS get user', JSON.parse(res.data.body).response.Item.familyId)
+
+      const famId = JSON.parse(res.data.body).response.Item.familyId
 
       // TODO: update hasFamily state to true if family id exists
-      // setFamily(true);
+      if (famId) {
+        setFamily(true);
+        setFamilyId(famId);
+      }
     })
     .catch(err => {
       console.log('ERROR get user', err)
     })
-  }, [])
+  }, [isLoaded, user])
 
   const onJoin = () => {
     let familyId = codeRef.current.value;
 
-    axios.put(`${process.env.NEXT_PUBLIC_API}/user/family`, {
-      userId: user?.id,
-      familyId
-    })
-    .then(res => {
-      console.log('SUCCESS join', res);
-      router.push('/home');
-    })
-    .catch(err => {
-      console.log('ERROR join', err);
-    })
+    if (user?.id) {
+      axios.put(`${process.env.NEXT_PUBLIC_API}/user/family`, {
+        userId: user?.id,
+        familyId
+      })
+      .then(res => {
+        console.log('SUCCESS join', res);
+        router.push('/home');
+      })
+      .catch(err => {
+        console.log('ERROR join', err);
+      })
+    }
   }
 
   return (
@@ -74,10 +85,11 @@ export default function Home() {
 
       { hasFamily ? (
         <div className="relative h-full w-full flex flex-col">
-          <div className="fixed z-[999] bottom-4 right-4 rounded-full bg-orange-600 h-20 w-20 drop-shadow-lg hover:cursor-pointer justify-center items-center">
-            <IoCalendarNumberOutline className=""/>
+          { eventModal && <EventModal setEventModal={setEventModal}/> }
+          <div onClick={() => {setEventModal(true)}} className="fixed z-[999] mb-4 mr-4 bottom-4 right-4 rounded-full bg-orange-600 h-20 w-20 drop-shadow-lg hover:cursor-pointer hover:bg-orange-700 flex justify-center items-center">
+            <IoCalendarNumberOutline className="h-12 w-12"/>
           </div>
-          <MoodFeed/>
+          <MoodFeed familyId={familyId}/>
         </div>
       )
       :

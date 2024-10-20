@@ -1,6 +1,6 @@
 "use client"
 
-export default function Events() {
+export default function Event() {
   return (
     <div className="w-full h-full flex flex-col justify-center items-center">
       <div className="bg-orange-600 w-[95%] md:w-[60%] h-72 rounded-xl flex flex-col shadow-lg">

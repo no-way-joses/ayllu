@@ -12,7 +12,8 @@ export default function MoodModal({ setModalOpen } : any) {
   const setMood = () => {
     // TODO: Set user mood in database
     axios.post(`${process.env.NEXT_PUBLIC_API}/mood`, {
-      userId: user?.id
+      userId: user?.id,
+      result: selectedMood
     })
     .then((res) => {
       console.log('Successful Mood Post', res)
@@ -29,7 +30,7 @@ export default function MoodModal({ setModalOpen } : any) {
         <h2 className="text-center font-bold text-2xl drop-shadow-md">
           How are you feeling today?
         </h2>
-        { selectedMood.length ? <h2>your'e feeling {selectedMood}</h2> : <h2>you're feeling...</h2> }
+        { selectedMood.length ? <h2>you're feeling {selectedMood}</h2> : <h2>you're feeling...</h2> }
         <div className="w-full flex items-center justify-evenly overflow-scroll bg-orange-600">
           <Image src={"/happy.png"} alt="happy" height="300" width="300" layout="responsive" className="w-full h-auto hover:opacity-60 ${selectedImage === 'happy' ? 'border-4 border-blue-500 shadow-lg'}" onClick={() => setSelectedMood('happy')}/>
           <Image src={"/sad.png"} alt="sad" height="300" width="300" layout="responsive" className="w-full h-auto hover:opacity-60" onClick={() => setSelectedMood('sad')}/>

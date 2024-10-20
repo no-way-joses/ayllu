@@ -17,7 +17,7 @@ export default function Home() {
   let [ hasFamily, setFamily ] = useState(false);
   let [ familyId, setFamilyId ] = useState('');
   let [ eventModal, setEventModal ] = useState(false);
-  let [ modalOpen, setModalOpen ] = useState(false); // TODO: change back to true
+  let [ modalOpen, setModalOpen ] = useState(true); // TODO: change back to true
 
   const router = useRouter();
   const { user, isLoaded } = useUser();
@@ -82,7 +82,6 @@ export default function Home() {
 
   return (
     <div className="w-screen h-screen">
-
       { hasFamily ? (
         <div className="relative h-full w-full flex flex-col">
           { eventModal && <EventModal setEventModal={setEventModal}/> }

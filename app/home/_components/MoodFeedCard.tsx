@@ -5,7 +5,7 @@ import axios from "axios"
 import { useUser } from "@clerk/clerk-react"
 import { useEffect, useState } from "react"
 
-export default function MoodFeedCard({ userId } : any) {
+export default function MoodFeedCard({ userId } : any ) {
   const { user, isLoaded } = useUser();
   const [ mood, setMood ] = useState('');
 
@@ -24,16 +24,18 @@ export default function MoodFeedCard({ userId } : any) {
     .catch(err => {
       console.log('ERROR MOODS', err)
     })
-  }, [isLoaded])
+  }, [isLoaded, userId])
 
   return (
     <div className="w-full bg-orange-400 flex flex-col justify-center items-center border-b-2 border-b-orange-500 p-9">
-      <div className="self-start w-28 flex items-center justify-around">
-        <div className="bg-slate-50 w-12 h-12 rounded-full"></div>
-        <p> {user?.firstName} </p>
+      <div className="self-start w-36 flex items-center justify-around">
+        <div className="bg-slate-50 w-12 h-12 rounded-full flex justify-center items-center">
+          <span className="text-slate-600 text-2xl"> {user?.firstName[0]} </span>
+        </div>
+        <p className="font-bold bg-orange-300 px-5 rounded-lg shadow-sm"> {user?.firstName} </p>
       </div>
       <Image src={`/${mood}.png`} alt={`${mood}`} height="250" width="250"/>
-      <p>...is feeling {mood}!</p>
+      <p className="p-4">...is feeling <span className="font-bold">{mood}!</span></p>
     </div>
   )
 }

@@ -27,6 +27,11 @@ const roboto = Roboto({
 export const metadata: Metadata = {
   title: "AYLLU",
   description: "Keep your family close",
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({
@@ -43,8 +48,10 @@ export default function RootLayout({
         <body
           className={`${roboto.className} w-screen h-screen antialiased bg-gradient-to-b from-orange-500 to-orange-400 text-slate-50`}
           >
-          <Navbar />
-          {children}
+          <div className="flex w-full h-full gap-2">
+            <Navbar />
+            {children}
+          </div>
         </body>
       </html>
     </ClerkProvider>

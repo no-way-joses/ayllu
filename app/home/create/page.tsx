@@ -51,7 +51,7 @@ export default function Create() {
         setfamilyID(famId);
         setFamCreate(true);
 
-        // router.push('/home');
+        router.push('/home');
 
       } catch (err) {
         console.error('ERROR', err);

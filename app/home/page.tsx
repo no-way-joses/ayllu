@@ -14,10 +14,12 @@ import MoodModal from "./_components/MoodModal";
 import EventModal from "./_components/EventModal";
 
 export default function Home() {
-  let [ hasFamily, setFamily ] = useState(false);
-  let [ familyId, setFamilyId ] = useState('');
-  let [ eventModal, setEventModal ] = useState(false);
-  let [ modalOpen, setModalOpen ] = useState(true); // TODO: change back to true
+  const [ hasFamily, setFamily ] = useState(false);
+  const [ familyId, setFamilyId ] = useState('');
+  const [ eventModal, setEventModal ] = useState(false);
+  const [ modalOpen, setModalOpen ] = useState(true); // TODO: change back to true
+
+  console.log('is this true', hasFamily)
 
   const router = useRouter();
   const { user, isLoaded } = useUser();
@@ -52,7 +54,7 @@ export default function Home() {
       const famId = JSON.parse(res.data.body).response.Item.familyId
 
       // TODO: update hasFamily state to true if family id exists
-      if (famId) {
+      if (famId !== '0') {
         setFamily(true);
         setFamilyId(famId);
       }
@@ -114,7 +116,7 @@ export default function Home() {
         </div>
       }
       {
-        modalOpen && <MoodModal setModalOpen={setModalOpen}/>
+        (modalOpen && hasFamily)  && <MoodModal setModalOpen={setModalOpen}/>
       }
     </div>
   );

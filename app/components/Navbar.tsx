@@ -1,23 +1,30 @@
 'use client'
 
 import React from 'react';
-import { useState } from 'react';
+import { SignInButton, SignOutButton, useUser } from '@clerk/nextjs'
 
 
 const Navbar = () => {
+
+  const { user, isSignedIn } = useUser();
+
   return (
-    <nav className="fixed top-0 left-0 h-screen w-20 bg-orange-900 text-white z-50">
+    <nav className="flex top-0 left-0 h-screen w-24 bg-orange-700 text-white">
       <div className="flex flex-col p-4">
-        <h1 className="text-xl font-bold">AYLLU</h1>
+        <h1 className="text-l font-bold">AYLLU</h1>
         <ul className="mt-4">
-          <li className="mb-2">
-            <a href="/">Home</a>
+          <li className="mb-2 text-m">
+            <a href="/home">Home</a>
           </li>
           <li className="mb-2">
-            <a href="/about">About</a>
+            <a href="/details">Details</a>
           </li>
           <li>
-            <a href="/contact">Contact</a>
+          { isSignedIn && (
+            <SignOutButton redirectUrl="/">
+            <button>Logout</button>
+            </SignOutButton>
+          )}
           </li>
         </ul>
       </div>

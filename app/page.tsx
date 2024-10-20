@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import Navbar from "./components/Navbar";
 
 export default function Home() {
   const router = useRouter();
@@ -18,9 +19,9 @@ export default function Home() {
     // if the user isn't logged in / authenticated, redirect to login
     <div className="z-20 flex flex-col justify-center items-center w-full h-full">
       <div>
-        <Image alt="logo" src="/logo.png" width="400" height="400"/>
-        <h1 className="text-4xl text-center font-bold drop-shadow-sm"> Welcome to AYLLU! </h1>
-        <h2 className="font-bold text-center mt-4"> Where Family Stays Close </h2>
+        <Image alt="logo" src="/logo.png" width="400" height="400" className="animate-fade animate-delay-7300"/>
+        <h1 className="text-4xl text-center font-bold drop-shadow-sm animate-fade-up animate-ease-out animate-delay-900"> Welcome to AYLLU! </h1>
+        <h2 className="text-center mt-4 animate-fade-up animate-ease-out animate-delay-700"> where family stays close </h2>
       </div>
       <div className="flex flex-col h-[30%] w-[70%] lg:w-[40%] justify-center">
         <div  onClick={onSignin}

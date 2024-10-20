@@ -1,6 +1,6 @@
 # AYLLU
 
-![Ayllu Welcome Page](./photos/2.png)
+![Ayllu Welcome Page](photos/1.png)
 
 ## Background
 As college students, there are times when we definitely feel the distance being away from our families. During the academic year, it can be hard to find time to talk with them especially with how hectic our schedules can be. We wanted to create an app to close the distance with our families, or anyone long-distance that we miss!

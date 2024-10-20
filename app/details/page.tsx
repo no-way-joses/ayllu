@@ -31,8 +31,8 @@ export default function Details() {
   <div className="w-screen h-screen">
        <div className=" z-20 flex flex-col justify-center items-center w-screen h-screen text-neutral-800">
         <div className="mx-11 leading-10 backdrop-blur-sm rounded-3xl bg-transparent/20 p-5 border-5 border-shadow">
-          <h1 className=" text-lg text-start items-center whitespace-pre-line">Family Details</h1>
-          <p className="text-2xl text-left indent-5 whitespace-break-spaces">{familyId}</p>
+          <h1 className=" text-lg text-start items-center whitespace-pre-line">Family ID:</h1>
+          <p className="text-2xl text-left indent-5 whitespace-break-spaces">a16f0cbe-e072-4bf4-b7d1-cecd4ac7c0e2</p>
           <p className="text-lg text-end">END OF DETAILS</p>
         </div>
       </div>

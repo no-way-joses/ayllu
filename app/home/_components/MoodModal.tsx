@@ -5,7 +5,7 @@ import axios from "axios";
 import { useUser } from "@clerk/nextjs";
 import { useState } from "react";
 
-export default function MoodModal({ setModalOpen }) {
+export default function MoodModal({ setModalOpen } : any) {
   const { user } = useUser();
   const [selectedMood, setSelectedMood] = useState('');
 

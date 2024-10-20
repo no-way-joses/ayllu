@@ -4,16 +4,18 @@ import { useUser } from "@clerk/clerk-react";
 import axios from "axios";
 import Image from "next/image";
 
+import { IoCalendarNumberOutline } from "react-icons/io5";
+
 import Navbar from "../components/Navbar";
 
 import { useEffect, useRef, useState } from "react";
-import MoodBar from "./_components/MoodBar";
+import MoodFeed from "./_components/MoodFeed";
 import MoodModal from "./_components/MoodModal";
 import Events from "./_components/Events";
 
 export default function Home() {
   let [ hasFamily, setFamily ] = useState(false);
-  let [ modalOpen, setModalOpen ] = useState(true);
+  let [ modalOpen, setModalOpen ] = useState(false); // TODO: change back to true
 
   const router = useRouter();
   const { user } = useUser();
@@ -44,7 +46,7 @@ export default function Home() {
       console.log('SUCCESS get user', res)
 
       // TODO: update hasFamily state to true if family id exists
-      setFamily(true);
+      // setFamily(true);
     })
     .catch(err => {
       console.log('ERROR get user', err)
@@ -65,17 +67,17 @@ export default function Home() {
     .catch(err => {
       console.log('ERROR join', err);
     })
-
-
   }
 
   return (
     <div className="w-screen h-screen">
 
       { hasFamily ? (
-        <div className="h-full w-full flex flex-col">
-          <MoodBar members={[]}/>
-          <Events />
+        <div className="relative h-full w-full flex flex-col">
+          <div className="fixed z-[999] bottom-4 right-4 rounded-full bg-orange-600 h-20 w-20 drop-shadow-lg hover:cursor-pointer justify-center items-center">
+            <IoCalendarNumberOutline className=""/>
+          </div>
+          <MoodFeed/>
         </div>
       )
       :

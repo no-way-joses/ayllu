@@ -18,6 +18,7 @@ export default function Home() {
   return (
     // if the user isn't logged in / authenticated, redirect to login
     <div className="z-20 flex flex-col justify-center items-center w-full h-full">
+      <Navbar />
       <div>
         <Image alt="logo" src="/logo.png" width="400" height="400" className="animate-fade animate-delay-7300"/>
         <h1 className="text-4xl text-center font-bold drop-shadow-sm animate-fade-up animate-ease-out animate-delay-900"> Welcome to AYLLU! </h1>

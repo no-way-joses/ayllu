@@ -2,6 +2,15 @@
 
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+const { GoogleGenerativeAI } = require("@google/generative-ai");
+const genAI = new GoogleGenerativeAI('API_KEY'); // <--- here API KEY
+const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+const prompt = "Write a story about a magic backpack.";
+
+(async () => {
+    const result = await model.generateContent(prompt);
+    console.log(result.response.text());
+})();
 
 interface Event {
     title: string;
@@ -26,11 +35,14 @@ export default function Event() {
     });
 
     useEffect(() => {
-        axios.post(`${process.env.NEXT_PUBLIC_API}/plan/get`, {
+        axios.post(`https://54mc904vld.execute-api.us-east-2.amazonaws.com/prod/plan/get`, { // <--- hardcoded for now
             familyId: "1", // <--- hardcoded for now
             startDate: "2021-09-01" // <--- hardcoded for now
           })
-            .then(response => setEvents(response.data))
+            .then(response => {
+                console.log('Events fetched:', JSON.parse(response.data.body)['plans']);
+                setEvents(JSON.parse(response.data.body)['plans'])
+            })
             .catch(error => console.error('Error fetching events:', error));
     }, []);
 
@@ -40,9 +52,10 @@ export default function Event() {
     };
 
     const handleCreateEvent = () => {
-        axios.post(`${process.env.NEXT_PUBLIC_API}/plan`, newEvent)
+        axios.post(`https://54mc904vld.execute-api.us-east-2.amazonaws.com/prod/plan`, newEvent) // <--- hardcoded for now
             .then(response => {
-                setEvents([...events, response.data]);
+                console.log('Event created:', response.data);
+                setEvents([...events, newEvent]);
                 setNewEvent({
                     title: '',
                     startDate: '',
@@ -61,7 +74,16 @@ export default function Event() {
             <h1>Events</h1>
             <div>
 
-
+            {events.map((event, index) => (
+                <div key={index} className="event-card">
+                    <h2>{event.title}</h2>
+                    <p>Start Date: {event.startDate}</p>
+                    {event.description && <p>Description: {event.description}</p>}
+                    {event.endDate && <p>End Date: {event.endDate}</p>}
+                    {event.startHour && <p>Start Hour: {event.startHour}</p>}
+                    {event.endHour && <p>End Hour: {event.endHour}</p>}
+                </div>
+            ))}
 
             </div>
             <div className="create-event-card">
